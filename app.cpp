@@ -1,4 +1,4 @@
-// C++ Program to Implement Rock-Paper-Scissors 
+// C++ Program to Implement Rock-Paper-Scissors game
 #include <cstdlib> 
 #include <ctime> 
 #include <iostream> 
