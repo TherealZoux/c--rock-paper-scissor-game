@@ -1,104 +1,97 @@
-// C++ Program to Implement Rock-Paper-Scissors game
-#include <cstdlib> 
-#include <ctime> 
-#include <iostream> 
-using namespace std; 
+#include "game.h"
+ 
+ 
+int main() {
+	string again;
 
-// get the computer move 
-char getComputerMove() 
-{ 
-	int move; 
-	// generating random number between 0 - 2 
-	srand(time(NULL)); 
-	move = rand() %3; 
-    // cout<< move<< endl;
+	do {
+    //User's choice
+    char uChoice; 
+    //Compter's choice
+    char cChoice;
+	//Chick if uesr want to play agin
+    
+    uChoice = getUserOption();
+    cout << "Your choice is: "<< endl;
+    showSelectedOption(uChoice);
+    
+    cout << "Computer's choice is: "<< endl;
+    cChoice = getComputerOption();
+    showSelectedOption(cChoice);
+    
+    chooseWinner(uChoice, cChoice);
+ 
+	cout << "Do you want to paly agin? (yes or no): ";
+	cin >> again;
 
-	// returning move based on the random number generated 
-	if (move == 0) { 
-		return 'p'; 
-	} 
-	else if (move == 1) { 
-		return 's'; 
-	} 
-	return 'r'; 
-} 
+	} while (again == "yes");
 
-// Function to return the result of the game 
-int getResults(char playerMove, char computerMove) 
-{ 
-	// condition for draw 
-	if (playerMove == computerMove) { 
-		return 0; 
-	} 
-
-	// condition for win and loss according to game rule 
-	if (playerMove == 's' && computerMove == 'p') { 
-		return 1; 
-	} 
-	if (playerMove == 's' && computerMove == 'r') { 
-		return -1; 
-	} 
-	if (playerMove == 'p' && computerMove == 'r') { 
-		return 1; 
-	} 
-	if (playerMove == 'p' && computerMove == 's') { 
-		return -1; 
-	} 
-	if (playerMove == 'r' && computerMove == 'p') { 
-		return -1; 
-	} 
-	if (playerMove == 'r' && computerMove == 's') { 
-		return 1; 
-	} 
+	cout << "Good bye\n";
 	
-	return 0; 
-} 
-
-// driver code 
-int main() 
-{ 
-
-	char playerMove; 
-
-	cout << "\n\n\n\t\t\tWelcome to Stone Paper Scissor "
-			"Game\n"; 
-
-	cout << "\n\t\tEnter r for ROCK, p for PAPER, and s "
-			"for SCISSOR\n\t\t\t\t\t"; 
-
-	// input from the user 
-	while(1) { 
-		cin >> playerMove; 
-		if (playerMove == 'p' || playerMove == 'r' || playerMove == 's') { 
-			break; 
-		} 
-		else { 
-			cout << "\t\t\tInvalid Player Move!!! Please Try Again." << endl; 
-		} 
-	} 
-	
-	
-
-	// computer move 
-	char computerMove = getComputerMove(); 
-
-	int result = getResults(playerMove, computerMove); 
-
-	// priting result based on who won the game 
-	if (result == 0) { 
-		cout << "\n\t\t\tGame Draw!\n"; 
-	} 
-	else if (result == 1) { 
-		cout << "\n\t\t\tCongratulations! Player won the "
-				"game!\n"; 
-	} 
-	else { 
-		cout << "\n\t\t\tOh! Computer won the game!\n"; 
-	} 
-
-	// showing both moves 
-	cout << "\t\t\tYour Move: " << playerMove << endl; 
-	cout << "\t\t\tComputer's Move: " << computerMove << endl; 
-
-	return 0; 
+    return 0;
 }
+
+
+char getComputerOption() {
+    srand(time(0));
+    // Random number
+    int num = rand() % 3 + 1;
+ 
+    if(num==1) return 'r';
+    else if(num==2) return 'p';
+    else if(num==3) return 's';
+	else return 'f';
+}
+ 
+char getUserOption() {
+    char c;
+    cout << "Rock, Paper and Scissors Game!" << endl;
+    cout << "Choose one of the following options"  << endl;
+    cout << "-----------------------------------"  << endl;
+    cout << "(r) rock " << endl << "(p) paper" << endl << "(s) scissors " << endl;
+    cin >> c;
+    
+    while (c!='r' && c!='p' && c!='s' )
+    {
+        cout << "Please enter one of the following options only. " << endl;
+        cout << "(r) for rock " << endl << "(p) for paper" << endl << "(s) for scissors " << endl;
+        cin >> c;
+    }
+ 
+    return c;
+}
+ 
+void showSelectedOption(char option) {
+    if (option == 'r') cout << "Rock" << endl;
+    if (option == 'p') cout << "Paper" << endl;
+    if (option == 's') cout << "Scissors" << endl;
+}
+ 
+void chooseWinner(char uChoice, char cChoice) {
+    if (uChoice == ROCK && cChoice == PAPER) {
+        cout << "Computer Wins! Paper wraps Rock."<< endl;
+    }
+    else if (uChoice == PAPER && cChoice == SCISSORS) {
+        cout << "Computer Wins! Scissors cut Paper."<< endl;
+        
+    }
+    else if (uChoice == SCISSORS && cChoice == ROCK) {
+        cout << "Computer Wins! Rock smashes Scissors."<< endl;
+        
+    }
+    else if (uChoice == ROCK && cChoice == SCISSORS) {
+        cout << "You Win! Paper wraps Rock."<< endl;
+        
+    }
+    else if (uChoice == PAPER && cChoice == ROCK) {
+        cout << "You Win! Paper wraps Rock."<< endl;
+        
+    }
+    else if (uChoice == SCISSORS && cChoice == PAPER) {
+        cout << "You Win! Scissors cut Paper."<< endl;
+    }
+    else{
+        cout << "Tie. Play again win the Game." << endl;
+    }
+}
+ 
